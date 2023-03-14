@@ -12,7 +12,8 @@ export const HomePage = () => {
   const {_id,picturePath}=useSelector(state=>state.user)
   return (
     <>
-    <Navbar/>
+    <Navbar />
+    <div style={{marginTop:"15vh"}}>
     <Box  width="100%" padding="2rem 6%" display={isNonMobileScreen?"flex":"block"} gap="0.5rem" justifyContent="space-between">
       <Box  flexBasis={isNonMobileScreen? "30%" :undefined}>
 
@@ -31,6 +32,8 @@ export const HomePage = () => {
       
       </Box>}
     </Box>
+    </div>
+
     </>
   )
 }

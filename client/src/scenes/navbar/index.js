@@ -43,7 +43,7 @@ export const Navbar = () => {
   const fullName=`${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="0.5rem 6%" backgroundColor={alt} >
+    <FlexBetween padding="0.5rem 6%" backgroundColor={alt} position="fixed" zIndex="100" top="0" >
       <FlexBetween gap="1.75rem">
 
         <Box  sx={{
@@ -81,8 +81,14 @@ export const Navbar = () => {
             <IconButton onClick={()=>dispatch(setMode())}>
             {theme.palette.mode==="dark" ? <DarkMode sx={{ fontSize:"25px"}}/>:<LightMode sx={{color:dark, fontSize:"25px" }}/>}
             </IconButton>
+
+            {/* if someone send a message it's gonna be added here */}
             <Message sx={{ color:dark, fontSize:"25px" }}/>
+
+
+            {/* if someone like a post or add me as a friend i want it to show up here */}
             <Notifications sx={{ color:dark, fontSize:"25px" }}/>
+            
             <Help sx={{ color:dark, fontSize:"25px" }}/>
             <FormControl variant="standard" value={fullName} >
               <Select value={fullName} sx={{

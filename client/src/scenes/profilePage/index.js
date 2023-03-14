@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useEffect,useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Navbar } from 'scenes/navbar';
 import EditOutlined from '@mui/icons-material/EditOutlined';
@@ -11,12 +11,15 @@ import PostsWidget from 'scenes/widgets/PostsWidget';
 import UserWidget from 'scenes/widgets/UserWidget';
 import UserImage from 'components/UserImage'
 import WidgetWrapper from 'components/WidgetWrapper'
-import FlexBetween from 'components/FlexBetween'
+import FlexBetween from 'components/FlexBetween';
+
 
 
 
 export const ProfilePage = () => {
   const [user,setUser]=useState(null);
+  const [newPic, setNewPic] = useState();
+  const dispatch=useDispatch();
   
   const{userId}=useParams();  
   const token = useSelector(state=>state.token);
@@ -27,6 +30,10 @@ export const ProfilePage = () => {
   const { palette } = useTheme();
  
   const isNonMobileScreen=useMediaQuery("(min-width: 1000px)");
+
+
+
+  
 
   const getUser= async ()=>{
     const response = await fetch(`http://localhost:3001/users/${userId}`,{
@@ -50,21 +57,46 @@ export const ProfilePage = () => {
     <Box>
        <Navbar/>
 
-     <WidgetWrapper>
-      <FlexBetween>
+      <div style={{marginTop:"10vh"}}>
+      <WidgetWrapper>
+      <Box display="flex" gap="2rem" alignItems="end">
 
-            <Box p="20px"  sx={{ textAlign:"center","&:hover ,EditOutlined":{
+            <Box p="20px" m="auto 0"  sx={{ textAlign:"center","&:hover ,EditOutlined":{
         cursor:"pointer"
       }}}>
       <UserImage image={`../assets/${user.picturePath}`} size='250px'/>
-      {userId===Muser._id?  <IconButton sx={{position:"absolute", width:"50px",height:"50px", left:"150px" ,bottom:"270px",color:palette.primary.main, "&:hover":{
+      {userId===Muser._id?  
+      <IconButton  sx={{ width:"50px",height:"50px",marginTop:"-100px", color:palette.primary.main, "&:hover":{
           backgroundColor:palette.neutral.medium
         }}}>
-        <EditOutlined  />
+          <input style={{visibility:"hidden"}} id='editimage' type="file" accept=".png, .jpg, .jpeg" onChange={(e)=>setNewPic(e.target.value)}/>
+          <label htmlFor='editimage'><EditOutlined   /></label>
+        
         </IconButton>:""}
 
+
+
       </Box>
-      </FlexBetween>
+        {/* <FlexBetween gap="3rem">
+        <Box>
+         <Typography sx={{fontSize:"2rem", textTransform:"capitalize", fontFamily:"verdana sans-serif", padding:"" }}>
+         {user.firstName} {user.lastName} 
+         </Typography>
+      </Box>
+      <Box>
+      <Button sx={{borderRadius:"25px", backgroundColor:palette.primary.main, m:"0 1rem", color:palette.background.alt}}>
+        send A message
+      </Button>
+
+      <Button sx={{borderRadius:"25px", backgroundColor:palette.primary.main, m:"0 1rem", color:palette.background.alt}}>
+        Add to your friends 
+      </Button>
+      </Box>
+
+
+    
+        </FlexBetween> */}
+      </Box>
 
 
        
@@ -88,6 +120,7 @@ export const ProfilePage = () => {
 
  
     </Box>
+      </div>
     </Box>
   )
 }
